@@ -1,17 +1,39 @@
-mxHero Dovecot Puppet Module
-============================
+# dovecot
 
-This module works under RedHat, CentOS 6+, Ubuntu 12+ and FreeBSD.
+A fork of [https://github.com/mxhero/puppet-dovecot][1].
 
-Install, enable and configure the Dovecot IMAP server.
-This module relies heavily on the conf.d structure adopted by dovecot 2.x.
 
-* `dovecot` : Main class
-* `dovecot::file` : Definition to manage configuration file snippets
-* `dovecot::plugin` : Definition to install plugin sub-packages
+#### Table of Contents
 
-Example Configuration
----------------------
+1. [Module Description - What the module does and why it is useful](#module-description)
+2. [Setup - The basics of getting started with dovecot](#setup)
+    * [What dovecot affects](#what-dovecot-affects)
+3. [Usage - Configuration options and additional functionality](#usage)
+
+
+## Module Description
+
+The dovecot module lets you use Puppet to manage the Dovecot IMAP server. This
+module is developed and tested on Debian 8 but will most likely be compatible
+with Debian-like distributions.
+
+
+## Setup
+
+### What dovecot affects
+
+  * Your system's `dovecot/dovecot.conf` file.
+  * Your system's `dovecot/conf.d/` directory
+
+
+## Usage
+
+  * `dovecot` : Main class
+  * `dovecot::file` : Definition to manage configuration file snippets
+  * `dovecot::plugin` : Definition to install plugin sub-packages
+
+
+### Example Configuration
 
     class { 'dovecot':
         plugins                    => [ 'mysql', 'pigeonhole' ],
@@ -34,3 +56,6 @@ Example Configuration
     dovecot::file { 'dovecot-sql.conf.ext':
         source => 'puppet:///modules/example/dovecot-sql.conf.ext',
     }
+
+
+[1]: https://github.com/mxhero/puppet-dovecot

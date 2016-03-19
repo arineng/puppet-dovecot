@@ -1,9 +1,5 @@
-mxHero is a platform that intends to provide a single point of development 
-and single point of distribution for email solutions and enhancements. It does this
-by providing an extensible framework for rapid development and deployment of
-email solutions.
-
-Copyright (C) 2013  mxHero Inc.
+Copyright (C) 2016 Seth Fischer
+Copyright (C) 2013 mxHero Inc.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
