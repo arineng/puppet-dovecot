@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "author": "Seth Fischer",
   "summary": "Dovecot puppet module",
-  "license": "GPL-3",
+  "license": "GPL-3.0+",
   "source": "https://github.com/sethfischer/puppet-dovecot.git",
   "project_page": "https://github.com/sethfischer/puppet-dovecot",
   "issues_url": "https://github.com/sethfischer/puppet-dovecot/issues",
