@@ -116,6 +116,8 @@ namespace inbox {
   # List the shared/ namespace only if there are visible shared mailboxes.
   #list = children
 #}
+# Should shared INBOX be visible as "shared/user" or "shared/user/INBOX"?
+#mail_shared_explicit_inbox = no
 
 # System user and group used to access mails. If you use multiple, userdb
 # can override these by returning uid or gid fields. You can use either numbers
@@ -149,6 +151,10 @@ mail_privileged_group = <%= @mail_privileged_group %>
 # maildir and mboxes, allowing you to prefix mailboxes names with eg. /path/
 # or ~user/.
 #mail_full_filesystem_access = no
+
+# Dictionary for key=value mailbox attributes. Currently used by URLAUTH, but
+# soon intended to be used by METADATA as well.
+#mail_attribute_dict =
 
 ##
 ## Mail processes
@@ -246,7 +252,7 @@ last_valid_uid = <%= @last_valid_uid %>
 #auth_socket_path = /var/run/dovecot/auth-userdb
 
 # Directory where to look up mail plugins.
-#mail_plugin_dir = /usr/lib/dovecot
+#mail_plugin_dir = /usr/lib/dovecot/modules
 
 # Space separated list of plugins to load for all services. Plugins specific to
 # IMAP, LDA, etc. are added to this list in their own .conf files.
@@ -258,6 +264,10 @@ mail_plugins = <%= @mail_plugins %>
 ##
 ## Mailbox handling optimizations
 ##
+
+# Mailbox list indexes can be used to optimize IMAP STATUS commands. They are
+# also required for IMAP NOTIFY extension to be enabled.
+#mailbox_list_index = no
 
 # The minimum number of mails in a mailbox before updates are done to cache
 # file. This allows optimizing Dovecot's behavior to do less disk writes at
@@ -276,6 +286,14 @@ mail_plugins = <%= @mail_plugins %>
 # Also note that if other software reads the mboxes/maildirs, they may handle
 # the extra CRs wrong and cause problems.
 #mail_save_crlf = no
+
+# Max number of mails to keep open and prefetch to memory. This only works with
+# some mailbox formats and/or operating systems.
+#mail_prefetch_count = 0
+
+# How often to scan for stale temporary files and delete them (0 = never).
+# These should exist only after Dovecot dies in the middle of saving mails.
+#mail_temp_scan_interval = 1w
 
 ##
 ## Maildir-specific settings
@@ -296,6 +314,16 @@ mail_plugins = <%= @mail_plugins %>
 # when its mtime changes unexpectedly or when we can't find the mail otherwise.
 #maildir_very_dirty_syncs = no
 
+# If enabled, Dovecot doesn't use the S=<size> in the Maildir filenames for
+# getting the mail's physical size, except when recalculating Maildir++ quota.
+# This can be useful in systems where a lot of the Maildir filenames have a
+# broken size. The performance hit for enabling this is very small.
+#maildir_broken_filename_sizes = no
+
+# Always move mails from new/ directory to cur/, even when the \Recent flags
+# aren't being reset.
+#maildir_empty_new = no
+
 ##
 ## mbox-specific settings
 ##
@@ -314,8 +342,14 @@ mail_plugins = <%= @mail_plugins %>
 # in is important to avoid deadlocks if other MTAs/MUAs are using multiple
 # locking methods as well. Some operating systems don't allow using some of
 # them simultaneously.
+#
+# The Debian value for mbox_write_locks differs from upstream Dovecot. It is
+# changed to be compliant with Debian Policy (section 11.6) for NFS safety.
+#       Dovecot: mbox_write_locks = dotlock fcntl
+#       Debian:  mbox_write_locks = fcntl dotlock
+#
 #mbox_read_locks = fcntl
-#mbox_write_locks = dotlock fcntl
+#mbox_write_locks = fcntl dotlock
 mbox_write_locks = fcntl
 
 # Maximum time to wait for lock (all of them) before aborting.
@@ -359,7 +393,7 @@ mbox_write_locks = fcntl
 
 # Maximum dbox file age until it's rotated. Typically in days. Day begins
 # from midnight, so 1d = today, 2d = yesterday, etc. 0 = check disabled.
-#mdbox_rotate_interval = 1d
+#mdbox_rotate_interval = 0
 
 # When creating new mdbox files, immediately preallocate their size to
 # mdbox_rotate_size. This setting currently works only in Linux with some
@@ -373,8 +407,6 @@ mbox_write_locks = fcntl
 # sdbox and mdbox support saving mail attachments to external files, which
 # also allows single instance storage for them. Other backends don't support
 # this for now.
-
-# WARNING: This feature hasn't been tested much yet. Use at your own risk.
 
 # Directory root where to store mail attachments. Disabled, if empty.
 #mail_attachment_dir =

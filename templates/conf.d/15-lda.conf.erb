@@ -3,14 +3,14 @@
 ##
 
 # Address to use when sending rejection mails.
-# Default is postmaster@<your domain>.
+# Default is postmaster@<your domain>. %d expands to recipient domain.
 #postmaster_address =
 <% if @postmaster_address -%>
 postmaster_address = <%= @postmaster_address %>
 <% end -%>
 
-# Hostname to use in various parts of sent mails, eg. in Message-Id.
-# Default is the system's real hostname.
+# Hostname to use in various parts of sent mails (e.g. in Message-Id) and
+# in LMTP replies. Default is the system's real hostname@domain.
 #hostname =
 <% if @hostname -%>
 hostname = <%= @hostname %>
@@ -23,13 +23,16 @@ hostname = <%= @hostname %>
 # Binary to use for sending mails.
 #sendmail_path = /usr/sbin/sendmail
 
+# If non-empty, send mails via this SMTP host[:port] instead of sendmail.
+#submission_host =
+
 # Subject: header to use for rejection mails. You can use the same variables
 # as for rejection_reason below.
 #rejection_subject = Rejected: %s
 
 # Human readable error message for rejection mails. You can use variables:
 #  %n = CRLF, %r = reason, %s = original subject, %t = recipient
-#rejection_reason = Your message to <%%t> was automatically rejected:%n%r
+#rejection_reason = Your message to <%t> was automatically rejected:%n%r
 
 # Delimiter character between local-part and detail in email address.
 #recipient_delimiter = +
