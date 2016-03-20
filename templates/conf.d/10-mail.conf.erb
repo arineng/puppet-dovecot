@@ -223,8 +223,16 @@ last_valid_uid = <%= @last_valid_uid %>
 # non-valid GID as primary group ID aren't allowed to log in. If user
 # belongs to supplementary groups with non-valid GIDs, those groups are
 # not set.
+<%- if @first_valid_gid %>
+first_valid_gid = <%= @first_valid_gid %>
+<% else %>
 #first_valid_gid = 1
+<% end -%>
+<%- if @last_valid_gid %>
+last_valid_gid = <%= @last_valid_gid %>
+<% else %>
 #last_valid_gid = 0
+<% end %>
 
 # Maximum allowed length for mail keyword name. It's only forced when trying
 # to create new keywords.
