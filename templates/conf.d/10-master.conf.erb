@@ -145,6 +145,21 @@ service auth {
 <% end -%>
   }
 
+  unix_listener auth-master {
+    #mode = 0666
+<% if @auth_listener_master_mode -%>
+    mode = <%= @auth_listener_master_mode %>
+<% end -%>
+    #user =
+<% if @auth_listener_master_user -%>
+    user = <%= @auth_listener_master_user %>
+<% end -%>
+    #group =
+<% if @auth_listener_master_group -%>
+    group = <%= @auth_listener_master_group %>
+<% end -%>
+  }
+
   # Postfix smtp-auth
   #unix_listener /var/spool/postfix/private/auth {
   #  mode = 0666
