@@ -143,7 +143,7 @@ class dovecot (
         $packages  = 'mail/dovecot2'
       }
       default: {
-        fail("OS $::operatingsystem and version $::operatingsystemrelease is not supported.")
+        fail("OS ${::operatingsystem} and version ${::operatingsystemrelease} is not supported.")
       }
     }
   } else {
@@ -164,7 +164,7 @@ class dovecot (
       $prefix    = 'mail/dovecot2'
     }
     default: {
-      fail("OS $::operatingsystem and version $::operatingsystemrelease is not supported")
+      fail("OS ${::operatingsystem} and version ${::operatingsystemrelease} is not supported")
     }
   }
 
@@ -188,15 +188,15 @@ class dovecot (
   package { $packages: ensure => installed }
   if $manage_service {
     service { 'dovecot':
-      enable    => true,
       ensure    => running,
+      enable    => true,
       hasstatus => true,
       require   => File["${directory}/dovecot.conf"],
     }
   }
 
   # Main configuration directory
-  file { "${directory}":
+  file { $directory:
     ensure => 'directory',
   }
   file { "${directory}/conf.d":
