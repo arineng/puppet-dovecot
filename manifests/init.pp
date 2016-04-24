@@ -105,6 +105,10 @@ class dovecot (
   $fts                           = undef,
   # 90-quota.conf
   $quota                         = undef,
+  $quota_rules                   = [],
+  $quota_status_client_limit     = undef,
+  $quota_status_executable       = undef,
+  $quota_status_port             = undef,
   $quota_warnings                = [],
   # auth-passwdfile.conf.ext
   $auth_passwdfile_passdb        = undef,

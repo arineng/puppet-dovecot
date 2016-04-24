@@ -93,4 +93,30 @@ plugin {
 <% if @quota -%>
   quota = <%= @quota %>
 <% end -%>
+
+<% if @quota_rules.is_a?(Array) and @quota_rules.count > 0 -%>
+<% @quota_rules.each_with_index do |rule, index| -%>
+<% if index > 0 -%>
+<% rule_num = index.to_i  -%>
+<% rule_num += 1 -%>
+  quota_rule<%= rule_num %> = <%= rule %>
+<% else -%>
+  quota_rule = <%= rule %>
+<% end -%>
+<% end -%>
+<% end -%>
+}
+
+service quota-status {
+<% if @quota_status_executable -%>
+  executable = <%= @quota_status_executable %>
+<% end -%>
+<% if @quota_status_port -%>
+  inet_listener {
+    port = <%= @quota_status_port %>
+  }
+<% end -%>
+<% if @quota_status_client_limit -%>
+  client_limit = <%= @quota_status_client_limit %>
+<% end -%>
 }
