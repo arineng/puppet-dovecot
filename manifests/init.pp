@@ -83,7 +83,7 @@ class dovecot (
   $imap_listen_port              = '*:143',
   $imaps_listen_port             = '*:993',
   $imap_mail_plugins             = undef,
-  $imap_client_workarounds       = undef,smbambling
+  $imap_client_workarounds       = undef,
   $lmtp_save_to_detail_mailbox   = undef,
   # 20-pop3.conf
   $pop3_mail_plugins             = undef,
