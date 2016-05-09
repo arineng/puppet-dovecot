@@ -78,7 +78,7 @@ class dovecot (
   $lda_mailbox_autocreate        = undef,
   $lda_mailbox_autosubscribe     = undef,
   # 15-mailboxes.conf
-  $enable_mailboxes_conf         = true,
+  $manage_mailboxes         = true,
   # 20-imap.conf
   $imap_listen_port              = '*:143',
   $imaps_listen_port             = '*:993',
@@ -236,7 +236,7 @@ class dovecot (
   file { "${directory}/conf.d/15-lda.conf":
     content => template('dovecot/conf.d/15-lda.conf.erb'),
   }
-  if $enable_mailboxes_conf {
+  if $manage_mailboxes {
     file { "${directory}/conf.d/15-mailboxes.conf":
       content => template('dovecot/conf.d/15-mailboxes.conf.erb'),
     }
