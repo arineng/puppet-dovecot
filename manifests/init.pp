@@ -140,7 +140,7 @@ class dovecot (
           'dovecot-imapd',
           'dovecot-pop3d',
           'dovecot-mysql',
-          'dovecot-lmtpd'
+          'dovecot-lmtpd',
         ]
       }
       'FreeBSD' : {
