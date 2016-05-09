@@ -78,14 +78,12 @@ class dovecot (
   $lda_mailbox_autocreate        = undef,
   $lda_mailbox_autosubscribe     = undef,
   # 15-mailboxes.conf
-  $manage_mailboxes         = true,
+  $manage_mailboxes              = true,
   # 20-imap.conf
   $imap_listen_port              = '*:143',
   $imaps_listen_port             = '*:993',
   $imap_mail_plugins             = undef,
-  $imap_client_workarounds       = undef,
-  # 20-lmtp.conf
-  $lmtp_mail_plugins             = undef,
+  $imap_client_workarounds       = undef,smbambling
   $lmtp_save_to_detail_mailbox   = undef,
   # 20-pop3.conf
   $pop3_mail_plugins             = undef,
@@ -205,6 +203,7 @@ class dovecot (
   file { $directory:
     ensure => 'directory',
   }
+
   file { "${directory}/conf.d":
     ensure => 'directory',
   }
@@ -218,32 +217,41 @@ class dovecot (
   file { "${directory}/conf.d/10-auth.conf":
     content => template('dovecot/conf.d/10-auth.conf.erb'),
   }
+
   file { "${directory}/conf.d/10-director.conf":
     content => template('dovecot/conf.d/10-director.conf.erb'),
   }
+
   file { "${directory}/conf.d/10-logging.conf":
     content => template('dovecot/conf.d/10-logging.conf.erb'),
   }
+
   file { "${directory}/conf.d/10-mail.conf":
     content => template('dovecot/conf.d/10-mail.conf.erb'),
   }
+
   file { "${directory}/conf.d/10-master.conf":
     content => template('dovecot/conf.d/10-master.conf.erb'),
   }
+
   file { "${directory}/conf.d/10-ssl.conf":
     content => template('dovecot/conf.d/10-ssl.conf.erb'),
   }
+
   file { "${directory}/conf.d/15-lda.conf":
     content => template('dovecot/conf.d/15-lda.conf.erb'),
   }
+
   if $manage_mailboxes {
     file { "${directory}/conf.d/15-mailboxes.conf":
       content => template('dovecot/conf.d/15-mailboxes.conf.erb'),
     }
   }
+
   file { "${directory}/conf.d/20-imap.conf":
     content => template('dovecot/conf.d/20-imap.conf.erb'),
   }
+
   file { "${directory}/conf.d/20-pop3.conf":
     content => template('dovecot/conf.d/20-pop3.conf.erb'),
   }
@@ -257,18 +265,23 @@ class dovecot (
   file { "${directory}/conf.d/90-sieve.conf":
     content => template('dovecot/conf.d/90-sieve.conf.erb'),
   }
+
   file { "${directory}/conf.d/90-quota.conf":
     content => template('dovecot/conf.d/90-quota.conf.erb'),
   }
+
   file { "${directory}/conf.d/90-plugin.conf":
     content => template('dovecot/conf.d/90-plugin.conf.erb'),
   }
-  file { "${directory}/conf.d/auth-passwdfile.conf.ext" :
+
+  file { "${directory}/conf.d/auth-passwdfile.conf.ext":
     content => template('dovecot/conf.d/auth-passwdfile.conf.ext.erb'),
   }
-  file { "${directory}/conf.d/auth-sql.conf.ext" :
+
+  file { "${directory}/conf.d/auth-sql.conf.ext":
     content => template('dovecot/conf.d/auth-sql.conf.ext.erb'),
   }
+
   file { '/etc/dovecot/conf.d/auth-ldap.conf.ext':
     content => template('dovecot/conf.d/auth-ldap.conf.ext.erb'),
   }
