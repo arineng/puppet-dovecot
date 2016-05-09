@@ -9,6 +9,7 @@ A fork of [https://github.com/mxhero/puppet-dovecot][1].
 2. [Setup - The basics of getting started with dovecot](#setup)
     * [What dovecot affects](#what-dovecot-affects)
 3. [Usage - Configuration options and additional functionality](#usage)
+4. [Limitations](#limitations)
 
 
 ## Module Description
@@ -56,6 +57,12 @@ with Debian-like distributions.
     dovecot::file { 'dovecot-sql.conf.ext':
         source => 'puppet:///modules/example/dovecot-sql.conf.ext',
     }
+
+## Limitations
+
+The service will only be reloaded on configuration change, meaning that changes
+requiring a full restart won't be applied, such as changes to listening
+interfaces.
 
 
 [1]: https://github.com/mxhero/puppet-dovecot
